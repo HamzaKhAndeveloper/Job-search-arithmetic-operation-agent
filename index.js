@@ -20,7 +20,7 @@ const llm = new ChatGroq({
       temperature: 0.5,
       maxTokens: undefined,
       reasoningFormat: "parsed",
-      timeout: undefined,
+      timeout: 20,
       maxRetries: 3, // Increased retries for rate limit handling
   });
 const multiply = tool(({a,b})=>{
