@@ -168,8 +168,6 @@ MATH RULES:
 - If the user asks for a calculation:
   - Call ONLY the required math tool.
   - Use the tool result directly.
-  - If the user also wants an email:
-    - Send the email ONLY after the math result is available.
 
 JOB SEARCH + EMAIL RULES:
 - If the user asks for job search AND email:
