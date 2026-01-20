@@ -1,0 +1,25 @@
+{
+  "name": "agent1",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@langchain/core": "^1.1.15",
+    "@langchain/groq": "^1.0.3",
+    "@langchain/langgraph": "^1.1.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "groq-js": "^1.25.0",
+    "langchain": "^1.2.10",
+    "mathjs": "^15.1.0",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^7.0.12",
+    "zod": "^4.3.5"
+  }
+}
