@@ -197,15 +197,7 @@ FINAL RESPONSE RULE:
     messages: [result]
   };
 };
-const toolNode = new ToolNode(tools, {
-  onToolFinish: (state, toolResult) => {
-    // Add tool result as message
-    state.messages.push({
-      role: "assistant",
-      content: toolResult
-    });
-  }
-});
+const toolNode = new ToolNode(tools);
 
 
 // Conditional edge function to route to the tool node or end
