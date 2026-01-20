@@ -10,6 +10,10 @@ import "dotenv/config";
 const app = express();
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Agent is running");
+});
+
 const llm = new ChatGroq({
       model: "llama-3.1-8b-instant",
       apiKey: process.env.GROQ_API_KEY, // Groq API key
@@ -225,16 +229,39 @@ const agentBuilder = new StateGraph(State)
   .addEdge("toolNode", "llmCall")
   .compile();
 
+
+  app.get("/run", (req, res) => {
+    res.send("Send POST request with JSON { text: '...' } to interact with the agent");
+  });
+
+
 // Invoke
 app.post("/run", async (req, res) => {
-  const { text } = req.body;
-const messages = [{
-  role: "user",
-  content: `${text}`
-}];
-const result = await agentBuilder.invoke({ messages });
-const finalMessage = result.messages.at(-1);
-res.json(finalMessage.content);
-console.log(finalMessage.content);
+  try {
+    const { text } = req.body;
+    if (!text) return res.status(400).json({ error: "Missing 'text' in request body" });
+
+    const messages = [
+      {
+        role: "user",
+        content: text
+      }
+    ];
+
+    const result = await agentBuilder.invoke({ messages });
+    const finalMessage = result.messages.at(-1);
+
+    // Return agent response
+    res.json({ response: finalMessage.content });
+    console.log(finalMessage.content);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Agent execution failed" });
+  }
 });
-app.listen(process.env.PORT || 3000);
+
+// ✅ Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Agent server running on port ${PORT}`);
+});
